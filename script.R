@@ -10,5 +10,5 @@ pos_control_mean <- mean(c(mtt_matrix[,2], mtt_matrix[,11]))
 relative_mtt_data <- (mtt_matrix/pos_control_mean)*100
 #remove not used wells
 relative_means <- colMeans(relative_mtt_data[,c(-1,-12)])
-#plot the data
+#plot the dataset
 barplot(relative_means, main = "viability", xlab="ratio", ylab = "cell viability (%)", names.arg = c("Control", rep("10:1",2), rep("8:1", 2), rep("5:1", 2), rep("2:1", 2), "Control"))
