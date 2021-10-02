@@ -1,5 +1,6 @@
 # mtt_assay
-Analyze directly mtt assay absorbance results
+Analyze directly mtt assay absorbance results.
+
 The script analyzes data from 96 wells plate data storage in a excel file – see mtt_data_1.xlsx. The plate design is expected to be this format:
 
 ![design](https://i.ibb.co/44mgSd0/plate-design.png)
