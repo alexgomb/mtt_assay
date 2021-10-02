@@ -10,3 +10,5 @@ Each ratio used for the experiment (10:1, 8:1, 5:1, 2:1) is used with and withou
 The calc used for viability is 
 
 ![formula](https://latex.codecogs.com/png.image?\dpi{110}&space;Viability.per.well&space;=&space;\frac{absorbance}{&space;\sum&space;\frac{positive.control.abosrbance}{number.of.positive.controls}})
+
+SD as error bars will be added soon as a new feature
