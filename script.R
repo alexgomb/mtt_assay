@@ -1,17 +1,21 @@
-#import excel file to a data frame
-library("readxl")
-mtt_data<- read_excel("mtt_data_1.xlsx", 
-                      col_names = FALSE)
-#dataframe to matrix
-mtt_matrix <- as.matrix(mtt_data)
-#mean of the control groups
-pos_control_mean <- mean(c(mtt_matrix[,2], mtt_matrix[,11]))
-#relativize abs data
-relative_mtt_data <- (mtt_matrix/pos_control_mean)*100
-#remove not used wells and calculate the mean
-relative_means <- colMeans(relative_mtt_data[,c(-1,-12)])
-#calculate the sd
-st_dv <- apply((relative_mtt_data[,c(-1,-12)]), 2, sd)
-#plot the dataset
-barplot(relative_means, main = "viability", xlab="ratio", ylab = "cell viability (%)", 
-        names.arg = c("Control", rep("10:1",2), rep("8:1", 2), rep("5:1", 2), rep("2:1", 2), "Control"))
+#load the library
+library(tidyverse)
+#function read.csv2 for european csv files
+mtt_data <- read.csv2("mtt_data_1.csv", header = FALSE)
+#remove the border columns
+mtt_data <- (mtt_data[,-c(1,12)])*100
+#calculate the mean for each column
+mean_col <- as.vector(apply(mtt_data, 2, mean))
+#mean of the positive controls
+mean_col_control <- mean(mean_col[c(1,10)])
+#relativize the cell viability of each well to the control
+mtt_data_rel <- (sweep(mtt_data, 2, mean_col_control, "/"))*100
+#mean of viability value for each experimental group and build the data frame
+exp_group <- c("Control 1", "10:1", "10:1 p", "8:1", "8:1 p", "5:1", "5:1 p", "2:1", "2:1 p", "Control p")
+viability <- apply(mtt_data_rel, 2, mean)
+viability<- data.frame(viability, row.names = exp_group)
+#build the plot
+ggplot(data = viability) + 
+  geom_bar(mapping = aes(x = exp_group, y = viability), 
+           stat = "identity", 
+           group = 1, width=0.5)
