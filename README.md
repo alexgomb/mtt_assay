@@ -11,4 +11,4 @@ The calc used for viability is
 
 ![formula](https://latex.codecogs.com/png.image?\dpi{110}&space;Viability.per.well&space;=&space;\frac{absorbance}{&space;\sum&space;\frac{positive.control.abosrbance}{number.of.positive.controls}})
 
-SD as error bars will be added soon as a new feature
+The cell viability result is represented in a bar plot with standard deviation as error bars.
