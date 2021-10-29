@@ -10,12 +10,14 @@ mean_col <- as.vector(apply(mtt_data, 2, mean))
 mean_col_control <- mean(mean_col[c(1,10)])
 #relativize the cell viability of each well to the control
 mtt_data_rel <- (sweep(mtt_data, 2, mean_col_control, "/"))*100
+#calculate the sd of each column
+sd_mtt <- apply(mtt_data_rel, 2, sd)
 #mean of viability value for each experimental group and build the data frame
 exp_group <- c("Control 1", "10:1", "10:1 p", "8:1", "8:1 p", "5:1", "5:1 p", "2:1", "2:1 p", "Control p")
-viability <- apply(mtt_data_rel, 2, mean)
+viability <- as.vector(apply(mtt_data_rel, 2, mean))
 viability<- data.frame(viability, row.names = exp_group)
 #build the plot
-ggplot(data = viability) + 
-  geom_bar(mapping = aes(x = exp_group, y = viability), 
-           stat = "identity", 
-           group = 1, width=0.5)
+ggplot(data = viability, aes(x = exp_group, y= viability)) + 
+  geom_bar( stat = "identity", 
+            group = 1, width=0.5) +
+  geom_errorbar(aes(ymin = viability - sd_mtt, ymax = viability + sd_mtt), width = 0.2)
